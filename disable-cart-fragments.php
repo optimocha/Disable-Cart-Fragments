@@ -4,13 +4,13 @@
  * Plugin Name: Disable Cart Fragments
  * Plugin URI: https://wordpress.org/plugins/disable-cart-fragments/
  * Description: A better way to disable WooCommerce's cart fragments script, and re-enqueue it when the cart is updated. Works with all caching plugins.
- * Version: 1.3
+ * Version: 1.4
  * Author: Optimocha
  * Author URI: https://optimocha.com/
  * License: GPL v3
  * Requires PHP: 5.6 or later
  * WC requires at least: 2.0
- * WC tested up to: 4.5.2
+ * WC tested up to: 5.2.1
  * Text Domain: disable-cart-fragments
  *
  * This program is free software; you can redistribute it and/or modify
@@ -41,20 +41,16 @@ if( !defined( 'OPTIMOCHA_DCF_DOMAIN' ) ) {
 	define( 'OPTIMOCHA_DCF_DOMAIN', 'disable-cart-fragments' );
 }
 
+require OPTIMOCHA_DCF_PATH . "/DCF_Notice_Manager.php";
+
 if ( ! class_exists( 'Optimocha_Disable_Cart_Fragments' ) ) {
 
 	class Optimocha_Disable_Cart_Fragments {
 
 		function __construct(){
-
-			require_once OPTIMOCHA_DCF_PATH . '/vendor/persist-admin-notices-dismissal/persist-admin-notices-dismissal.php';
-
-			if( class_exists( 'PAnD' ) ) {
-				add_action( 'admin_init', array( 'PAnD', 'init' ) );
-			}
-
 			add_filter( "plugin_action_links_" . OPTIMOCHA_DCF_BASENAME, array( $this, 'settings_links' ) );
-			add_action( 'admin_notices', array( $this, 'optimocha_notice' ) );
+
+			add_action('admin_init', [ $this, 'set_pro_service_notice' ]);
 
 			if( $this->dcf_is_plugin_active( 'speed-booster-pack/speed-booster-pack.php' ) ) {
 
@@ -87,21 +83,6 @@ if ( ! class_exists( 'Optimocha_Disable_Cart_Fragments' ) ) {
 				</p>
 			</div>
 			<?php
-
-		}
-
-		function optimocha_notice() {
-
-			if ( ! PAnD::is_admin_notice_active( 'dcf-180' ) ) {
-				return;
-			}
-
-			?>
-			<div data-dismissible="dcf-180" class="notice notice-success is-dismissible">
-				<p><a href="https://optimocha.com/?ref=disable-cart-fragments" target="_blank"><?php _e( "If you need any help optimizing your website speed, if you're ready to <em>invest in</em> speed optimization, you can visit Optimocha.com by clicking here, and have us speed up your site!", OPTIMOCHA_DCF_DOMAIN ); ?></a></p>
-			</div>
-			<?php
-
 		}
 
 
@@ -154,6 +135,11 @@ if ( ! class_exists( 'Optimocha_Disable_Cart_Fragments' ) ) {
 			array_unshift( $links, $pro_link );
 
 			return $links;
+		}
+
+        public function set_pro_service_notice() {
+            new \DCF\DCF_Notice_Manager();
+            \DCF\DCF_Notice_Manager::display_notice('dcf_pro_service', '<p><a href="https://optimocha.com/?ref=disable-cart-fragments" target="_blank">' . __( "If you need any help optimizing your website speed, if you're ready to <em>invest in</em> speed optimization, you can visit Optimocha.com by clicking here, and have us speed up your site!", OPTIMOCHA_DCF_DOMAIN ) . '</a></p>', 'info');
 		}
 	}
 
