@@ -2,11 +2,11 @@
 Contributors: optimocha
 Tags: disable cart fragments, woocommerce, cart fragments, woocommerce cart fragments
 Requires at least: 4.6
-Tested up to: 5.7.1
+Tested up to: 6.1
 Requires PHP: 5.6
 WC requires at least: 2.0
-WC tested up to: 5.2.1
-Stable tag: 1.4
+WC tested up to: 7.3.0
+Stable tag: 2.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -43,6 +43,21 @@ Feel free to reach out to us at [Optimocha.com](https://optimocha.com/?ref=disab
 5. When activated, it will start working. There's no settings page, simply activate and use.
 
 == Changelog ==
+
+= 2.2 =
+* Tested and ensured compatibility with PHP 8.1, WordPress 6.1.1 and WooCommerce 7.3.0.
+* Added the necessary HPOS (High-Performance Order Storage) compatibility code.
+
+= 2.1.1 =
+* Version bumps to ensure DCF is working with WordPress 6.0 and WooCommerce 6.5.1.
+
+= 2.0 =
+* Turns out WordPress thinks v1.21 is "newer" than 1.4 - kind of makes sense; we should've made v1.21 as v1.2.1. Anyway, we're releasing v2.0 which is the same as v1.4 but this will set the record straight and people using v1.21 will get updates this time.
+
+= 1.4 =
+* Tested up to WordPress's and WooCommerce's latest versions.
+* Fixed non-dismissible notice.
+* New uninstall.php.
 
 = 1.21 =
 * Forgot to change the version name in the PHP file... (sigh)

@@ -4,13 +4,13 @@
  * Plugin Name: Disable Cart Fragments
  * Plugin URI: https://wordpress.org/plugins/disable-cart-fragments/
  * Description: A better way to disable WooCommerce's cart fragments script, and re-enqueue it when the cart is updated. Works with all caching plugins.
- * Version: 1.4
+ * Version: 2.2
  * Author: Optimocha
  * Author URI: https://optimocha.com/
  * License: GPL v3
  * Requires PHP: 5.6 or later
  * WC requires at least: 2.0
- * WC tested up to: 5.2.1
+ * WC tested up to: 7.3.0
  * Text Domain: disable-cart-fragments
  *
  * This program is free software; you can redistribute it and/or modify
@@ -42,6 +42,12 @@ if( !defined( 'OPTIMOCHA_DCF_DOMAIN' ) ) {
 }
 
 require OPTIMOCHA_DCF_PATH . "/DCF_Notice_Manager.php";
+
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );
 
 if ( ! class_exists( 'Optimocha_Disable_Cart_Fragments' ) ) {
 
