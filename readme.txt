@@ -72,3 +72,8 @@ Feel free to reach out to us at [Optimocha.com](https://optimocha.com/?ref=disab
 
 = 1.0 =
 * Initial release
+
+== Upgrade Notice ==
+
+= 2.2 =
+Ensured compatibility with WooCommerce 7.3.0 (including HPOS or High-Performance Order Storage), WordPress 6.1.1 and PHP 8.1.
