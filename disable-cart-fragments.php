@@ -54,6 +54,7 @@ if ( ! class_exists( 'Optimocha_Disable_Cart_Fragments' ) ) {
 	class Optimocha_Disable_Cart_Fragments {
 
 		function __construct(){
+
 			add_filter( "plugin_action_links_" . OPTIMOCHA_DCF_BASENAME, array( $this, 'settings_links' ) );
 
 			add_action('admin_init', [ $this, 'set_pro_service_notice' ]);
@@ -82,6 +83,8 @@ if ( ! class_exists( 'Optimocha_Disable_Cart_Fragments' ) ) {
 		}
 
 		function sbp_active_warning() {
+
+			if( ! current_user_can( 'manage_options' ) ) return false;
 
 			?>
 			<div class="notice notice-error">
@@ -144,6 +147,9 @@ if ( ! class_exists( 'Optimocha_Disable_Cart_Fragments' ) ) {
 		}
 
         public function set_pro_service_notice() {
+
+        	if( ! current_user_can( 'manage_options' ) ) return false;
+
             new \DCF\DCF_Notice_Manager();
             \DCF\DCF_Notice_Manager::display_notice('dcf_pro_service', '<p><a href="https://optimocha.com/?ref=disable-cart-fragments" target="_blank">' . __( "If you need any help optimizing your website speed, if you're ready to <em>invest in</em> speed optimization, you can visit Optimocha.com by clicking here, and have us speed up your site!", OPTIMOCHA_DCF_DOMAIN ) . '</a></p>', 'info');
 		}
